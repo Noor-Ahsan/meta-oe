@@ -23,10 +23,11 @@ do_install () {
         install -m 0755 ${SCRIPTS} ${D}/bin
 }
 
-PACKAGES += "bonnie-scripts"
+PACKAGES =+ "bonnie-scripts"
 
-FILES_${PN} = "/sbin"
-FILES_bonnie-scripts="/bin"
+FILES_${PN} = "${base_sbindir}"
+FILES_bonnie-scripts = "${base_bindir}"
+
 
 
 

@@ -27,22 +27,35 @@ do_install_append() {
 }
 
 pkg_prerm_${PN} () {
-for app in add-shell  installkernel  mkboot  remove-shell run-parts  savelog  sensible-browser  sensible-editor  sensible-pager  tempfile  which ; do
-   update-alternatives --remove $app $app.${PN}
-done
+if [ "x$D" != "x" ]; then
+    echo "can't do u-a offline" ; exit 1
+else
+
+    for app in add-shell  installkernel  mkboot  remove-shell run-parts  savelog  sensible-browser  sensible-editor  sensible-pager  tempfile  which ; do
+       update-alternatives --remove $app $app.${PN}
+    done
+
+fi
 }
 
 pkg_postinst_${PN} () {
-#!/bin/sh
-for app in add-shell  installkernel  mkboot  remove-shell ; do
-    update-alternatives --install ${sbindir}/$app $app $app.${PN} 100
-done
-for app in savelog  sensible-browser  sensible-editor  sensible-pager  which ; do
-    update-alternatives --install ${bindir}/$app $app $app.${PN} 100
-done
-for app in run-parts  tempfile ; do
-    update-alternatives --install ${base_bindir}/$app $app $app.${PN} 100
-done
+if [ "x$D" != "x" ]; then
+    echo "can't do u-a offline" ; exit 1
+else
+
+    for app in add-shell  installkernel  mkboot  remove-shell ; do
+        update-alternatives --install ${sbindir}/$app $app $app.${PN} 100
+    done
+
+    for app in savelog  sensible-browser  sensible-editor  sensible-pager  which ; do
+        update-alternatives --install ${bindir}/$app $app $app.${PN} 100
+    done
+
+    for app in run-parts  tempfile ; do
+        update-alternatives --install ${base_bindir}/$app $app $app.${PN} 100
+    done
+
+fi
 }
 
 
